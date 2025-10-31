@@ -260,7 +260,7 @@ def get_stock_data(ticker_symbol):
 
 # ================ Holdings Processing ================
 def process_holdings_file(
-    input_file="/content/drive/MyDrive/holdings_with_changes_14_Aug.csv",
+    input_file="./content/drive/MyDrive/holdings_with_changes_14_Aug.csv",
     output_file="OUTPUT_21_Aug.xlsx"):
 
     import re

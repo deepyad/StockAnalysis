@@ -16,48 +16,6 @@ from openpyxl import load_workbook
 import requests
 from bs4 import BeautifulSoup
 
-# def get_latest_news_link(ticker_symbol, positive=True):
-#     """
-#     Finds the most recent positive or negative news link for a given ticker.
-#     If positive is True, searches for the most positive; otherwise, most negative.
-#     Returns the news title and its direct link, or None if not found.
-#     """
-#     # We'll use Google News search for the ticker
-#     # NB: This is for demonstration. In production, use a real news API for reliability.
-#     query = f"{ticker_symbol} stock"
-#     url = f"https://news.google.com/search?q={query}&hl=en-IN&gl=IN&ceid=IN:en"
-#     headers = {"User-Agent": "Mozilla/5.0"}
-#     try:
-#         resp = requests.get(url, headers=headers)
-#         soup = BeautifulSoup(resp.text, 'html.parser')
-#         articles = soup.find_all('article')
-#         news_items = []
-#         for article in articles:
-#             header = article.find('h3')
-#             if not header:
-#                 continue
-#             title = header.text.lower()
-#             link_tag = header.find('a')
-#             if not link_tag:
-#                 continue
-#             link = link_tag['href']
-#             # Google News uses relative URLs for articles
-#             if not link.startswith('http'):
-#                 link = 'https://news.google.com' + link[1:]
-#             news_items.append((title, link))
-#         # Define simple lists of positive/negative keywords
-#         positives = ['surge', 'profit', 'beats', 'rise', 'growth', 'record', 'gain', 'buy', 'up', 'upgrade', 'outperform']
-#         negatives = ['loss', 'decline', 'drops', 'down', 'plunge', 'sell', 'downgrade', 'bearish', 'fall', 'lower', 'misses']
-#         for keywords in (positives if positive else negatives):
-#             for title, link in news_items:
-#                 if keywords in title:
-#                     return title.title(), link
-#         # If not found, return the first latest news headline
-#         if news_items:
-#             return news_items[0].title(), news_items[12]
-#     except Exception as e:
-#         print(f"Failed to get news for {ticker_symbol}: {e}")
-#     return None, None
 import requests
 from bs4 import BeautifulSoup
 
@@ -145,21 +103,6 @@ def get_latest_news_link_newsdata(ticker_symbol, positive=True, apikey="pub_0ddc
         print(f"  ⚠ News API error for {ticker_symbol}: {e}")
         return None, None
 
-# Usage:
-# title, link = get_latest_news_link_newsdata("ASHOKLEY.NS", positive=True, apikey="YOUR_API_KEY")
-# print(title, link)
-
-
-# Usage:
-# title, link = get_latest_news_link("ASHOKLEY.NS", positive=True)
-# print("Most positive:", title, link)
-
-# Example Usage:
-# positive_news_title, positive_news_link = get_latest_news_link("ASHOKLEY.NS", positive=True)
-# print("Most positive:", positive_news_title, positive_news_link)
-# negative_news_title, negative_news_link = get_latest_news_link("ASHOKLEY.NS", positive=False)
-# print("Most negative:", negative_news_title, negative_news_link)
-
 
 def calculate_RSI(prices, period=14):
     delta = prices.diff()
@@ -182,18 +125,7 @@ def calculate_MACD(prices, short_window=12, long_window=26, signal_window=9):
     signal_line = macd_line.ewm(span=signal_window, adjust=False).mean()
     return macd_line, signal_line
 
-# def classify_MACD_per_day(macd_series, signal_series, threshold=0.7):
-#     diff = macd_series - signal_series
-#     def classify_val(x):
-#         if x > threshold:
-#             return "Overbought"
-#         # elif x < -threshold:
-#         elif x < .3:
-#             return "Oversold"
-#         else:
-#             return "Neutral"
-#     status = diff.apply(classify_val)
-#     return status
+
 def classify_MACD_per_day(macd_series, signal_series):
     """
     Classifies MACD status with extreme/medium/neutral levels.
